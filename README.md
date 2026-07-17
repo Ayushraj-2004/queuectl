@@ -244,7 +244,15 @@ confirm functions return the right type.
 
 ## Demo
 
-<!-- Add your recorded CLI demo link here before submitting -->
+[Watch the CLI demo on Google Drive] (https://drive.google.com/file/d/17ZEm_YmOwL3FvNeVN1eL0smhqi_Hf9bk/view?usp=sharing)
+
+**Demo includes:**
+- Enqueuing multiple jobs
+- Starting 2 worker processes
+- Successful job execution
+- Failed job with retry and exponential backoff
+- Dead Letter Queue (DLQ) operations
+- Graceful worker shutdown
 
 ## Project structure
 
