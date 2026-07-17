@@ -244,7 +244,7 @@ confirm functions return the right type.
 
 ## Demo
 
-[Watch the CLI demo on Google Drive] (https://drive.google.com/file/d/17ZEm_YmOwL3FvNeVN1eL0smhqi_Hf9bk/view?usp=sharing)
+[Watch the CLI demo on Google Drive](https://drive.google.com/file/d/17ZEm_YmOwL3FvNeVN1eL0smhqi_Hf9bk/view?usp=sharing)
 
 **Demo includes:**
 - Enqueuing multiple jobs
