@@ -13,26 +13,41 @@ program.name('queuectl').description('CLI-based background job queue system').ve
 program
   .command('enqueue')
   .description('Add a new job to the queue')
-  .argument('<json>', 'Job JSON, e.g. \'{"id":"job1","command":"sleep 2"}\'')
+  .argument('[json]', 'Job JSON. If omitted, reads from stdin.')
   .action((json) => {
-    let parsed;
-    try {
-      parsed = JSON.parse(json);
-    } catch {
-      console.error('Error: enqueue argument must be valid JSON');
-      process.exit(1);
-    }
-    if (!parsed.id || !parsed.command) {
-      console.error('Error: job JSON must include at least "id" and "command"');
-      process.exit(1);
-    }
-    const db = getDb();
-    try {
-      const job = jobStore.enqueue(db, parsed);
-      console.log(`Enqueued job "${job.id}" (state=${job.state})`);
-    } catch (err) {
-      console.error(`Error: ${err.message}`);
-      process.exit(1);
+    const handleJson = (jsonStr) => {
+      let parsed;
+      try {
+        parsed = JSON.parse(jsonStr);
+      } catch {
+        console.error('Error: enqueue argument must be valid JSON');
+        process.exit(1);
+      }
+      if (!parsed.id || !parsed.command) {
+        console.error('Error: job JSON must include at least "id" and "command"');
+        process.exit(1);
+      }
+      const db = getDb();
+      try {
+        const job = jobStore.enqueue(db, parsed);
+        console.log(`Enqueued job "${job.id}" (state=${job.state})`);
+      } catch (err) {
+        console.error(`Error: ${err.message}`);
+        process.exit(1);
+      }
+    };
+
+    if (json) {
+      handleJson(json);
+    } else {
+      // Read from stdin
+      let input = '';
+      process.stdin.on('data', (chunk) => {
+        input += chunk;
+      });
+      process.stdin.on('end', () => {
+        handleJson(input.trim());
+      });
     }
   });
 
